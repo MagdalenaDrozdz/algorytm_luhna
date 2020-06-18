@@ -1,0 +1,50 @@
+package com.company;
+
+public class Main {
+
+    public static boolean algorytm_luhna(int numer)
+    {
+        String liczba = String.valueOf(numer);
+        for (int i = 0; i <= liczba.length() ; i++)
+        {
+            if(liczba.charAt(i)=='0')
+                liczba = liczba.substring(0, i ) + liczba.substring(i+1, liczba.length());      //usuwamy 0 z liczby
+        }
+
+        int suma = 0;                                               //obliczamy cyfrę kontrolną
+        int cyfra = 0;
+        for (int i = 0; i <= liczba.length()-1; i++)
+        {
+            cyfra = Integer.parseInt(liczba.substring(i, i + 1));
+            if(i%2==1) {
+                cyfra *= 2;
+            }
+            if(cyfra > 9){
+                cyfra=(cyfra/10)+(cyfra%10);
+            }
+            suma+=cyfra;
+        }
+
+        liczba+=(10-(suma%10));                                       //dodoajemy cyfrę kontrolną do liczby
+        suma=0;
+
+        for (int i = 0; i <= liczba.length()-1 ; i++)                 //sprawdzamy czy reszta wyniesie 0
+        {
+            cyfra = Integer.parseInt(liczba.substring(i, i + 1));
+            if(i%2==0) {
+                cyfra *= 2;
+            }
+            if(cyfra > 9){
+                cyfra=(cyfra/10)+(cyfra%10);
+            }
+            suma+=cyfra;
+        }
+
+        return (suma%10)==0;
+
+    }
+
+    public static void main(String[] args) {
+	    System.out.println(algorytm_luhna(92480));
+    }
+}
